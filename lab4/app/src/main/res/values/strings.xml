@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">lab4</string>
+    <string name="buttonFindDescription">Определить цвет</string>
+
+    <string-array name="colors">
+        <item>RED</item>
+        <item>YELLOW</item>
+        <item>GREEN</item>
+        <item>BLUE</item>
+        <item>ORANGE</item>
+    </string-array>
+    <string-array name="description_of_temp">
+        <item>описание RED</item>
+        <item>описание YELLOW</item>
+        <item>описание GREEN</item>
+        <item>описание BLUE</item>
+        <item>описание ORANGE</item>
+    </string-array>
+</resources>
