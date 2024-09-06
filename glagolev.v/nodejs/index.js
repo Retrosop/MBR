@@ -28,3 +28,11 @@
 
 const greeting = require("./greeting");
 console.log(greeting);
+
+const { Date } = require("./greeting");
+console.log(Date);
+
+const User = require("./user.js");
+const vladimir = new User("Vladimir", 40);
+vladimir.print();
+vladimir.sayHi();
