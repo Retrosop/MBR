@@ -7,17 +7,24 @@
 //     console.log("Сервер успешно запушены");
 //   });
 
-const http = require("http");
-const hostname = "127.0.0.1";
-const port = 3000;
+// const http = require("http");
+// const hostname = "127.0.0.1";
+// const port = 3000;
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain; charset=utf-8"); // Устанавливаем кодировку UTF-8
-  const currentDate = new Date().toLocaleString(); // Получаем текущую дату
-  res.end(`Текущая дата: ${currentDate}\n`);
-});
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200;
+//   res.setHeader("Content-Type", "text/plain; charset=utf-8"); // Устанавливаем кодировку UTF-8
+//   const currentDate = new Date().toLocaleString(); // Получаем текущую дату
+//   res.end(`Текущая дата: ${currentDate}\n`);
+// });
 
-server.listen(port, hostname, () => {
-  console.log(`Сервер запущен по адресу http://${hostname}:${port}/`);
-});
+// server.listen(port, hostname, () => {
+//   console.log(`Сервер запущен по адресу http://${hostname}:${port}/`);
+// });
+
+// const os = require("os");
+// const userName = os.userInfo().username;
+// console.log(userName);
+
+const greeting = require("./greeting");
+console.log(greeting);
