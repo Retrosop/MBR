@@ -36,3 +36,7 @@ const User = require("./user.js");
 const vladimir = new User("Vladimir", 40);
 vladimir.print();
 vladimir.sayHi();
+
+const Goods = require("./goods.js");
+const tv = new Goods(10000, 54, 40);
+tv.print();
