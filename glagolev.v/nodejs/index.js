@@ -44,4 +44,4 @@ tv.print();
 const greeting23 = require("./greeting23");
 global.username = "Eugene";
 global.console.log(date);
-greeting.printMessage();
+greeting23.printMessage();
