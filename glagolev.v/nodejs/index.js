@@ -40,3 +40,8 @@ vladimir.sayHi();
 const Goods = require("./goods.js");
 const tv = new Goods(10000, 54, 40);
 tv.print();
+
+const greeting23 = require("./greeting23");
+global.username = "Eugene";
+global.console.log(date);
+greeting.printMessage();
