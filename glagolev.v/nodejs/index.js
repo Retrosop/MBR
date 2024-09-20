@@ -82,7 +82,7 @@ const app = express();
 
 // устанавливаем обработчик для маршрута "/"
 app.get("/", function (_, response) {
-  response.end("<html><body> <b>Hello world3!!!<b></body></html>");
+  response.end("<html><body> <b>Hello world4!!!<b></body></html>");
 });
 // начинаем прослушивание подключений на 3000 порту
 app.listen(3000, function () {
@@ -93,6 +93,7 @@ app.listen(3000, function () {
 //npm install -g nodemon
 
 //Глава 2.8
+//Чтения файла
 const fs = require("fs");
 
 fs.readFile("hello.txt", function (error, data) {
@@ -107,3 +108,183 @@ console.log("Асинхронное чтение файлов");
 const data = fs.readFileSync("hello.txt");
 console.log(data.toString()); // выводим считанные данные
 console.log("Синхронное чтение файлов");
+
+//Запись файла
+
+const dataWrite = "Hello Node.js\n";
+
+fs.writeFile("helloWrite.txt", dataWrite, function (error) {
+  if (error) {
+    // если ошибка
+    return console.log(error);
+  }
+  console.log("Файл успешно записан");
+});
+
+//Асинхронная запись
+
+// синхронное добавление
+fs.appendFileSync("helloWrite.txt", "Hello word\n");
+
+// асинхронное добавление
+fs.appendFile("helloWrite.txt", "Hello walk\n", function (error) {
+  if (error) return console.log(error); // если возникла ошибка
+
+  console.log("Запись файла завершена");
+});
+
+//В качестве альтернативы можно установить через объект конфигурации флаг на дозапись - флаг "a":
+
+fs.writeFile("helloWrite.txt", "Hello all\n", { flag: "a" }, function (error) {
+  if (error) return console.log(error); // если возникла ошибка
+
+  console.log("Запись файла завершена");
+});
+
+//Получение информации о файле
+//Для получения информации о файле в асинхронном режиме применяется функция stat()
+
+fs.stat("helloWrite.txt", (error, stats) => {
+  if (error) return console.error(error);
+  console.log(stats.isFile()); // true
+  console.log(stats.isDirectory()); // false
+  console.log(stats);
+});
+
+//Синхронное считывание статистики
+
+const stats = fs.statSync("hello.txt");
+console.log(stats.isFile()); // true
+console.log(stats.isDirectory()); // false
+console.log(stats);
+
+//Удаление файла
+
+//fs.unlinkSync("hello.txt")
+//fs.unlink("hello.txt", (error) => {
+//   if (error) return console.log(error); // если возникла ошибка
+//   console.log("File deleted");
+// });
+
+//Добавление каталога
+
+// fs.mkdir("test", (error) => {
+//   if (error) return console.log(error);
+//   console.log("Folder created");
+// });
+
+// fs.readdir("test", (error, files) => {
+//   if (error) return console.log(error);
+//   files.forEach((file) => console.log(file));
+// });
+
+// fs.rmdir("test", (error) => {
+//   if (error) return console.log(error);
+//   console.log("Folder deleted");
+// });
+
+//Глава 2.9
+
+//События на on
+const EventEmitter = require("events");
+// определяем эмиттер событий
+const emitter = new EventEmitter();
+
+// имя события, которое будет обрабатываться
+const eventName = "greet";
+
+// регистрируем обработчик для события "greet"
+emitter.on(eventName, function () {
+  console.log("Hello World! I Event !!!");
+});
+
+// генерируем событие greet
+emitter.emit(eventName);
+
+//Генерация трех событий on
+
+// определяем эмиттер событий
+const emitter3 = new EventEmitter();
+
+// имя события, которое будет обрабатываться
+const eventName3 = "greet";
+
+// регистрируем три обработчика для события "greet"
+emitter3.on(eventName3, function () {
+  console.log("Hello World!");
+});
+emitter3.on(eventName3, function () {
+  console.log("Привет мир!");
+});
+emitter3.on(eventName3, function () {
+  console.log("Hallo Welt!");
+});
+
+// генерируем событие greet
+emitter3.emit(eventName3);
+
+//Передача параметров событию
+
+const emitter4 = new EventEmitter();
+
+const eventName4 = "greet";
+
+emitter4.on(eventName4, function (data) {
+  console.log(data);
+});
+
+emitter4.emit(eventName4, "Привет пир!");
+
+//Наследование от EventEmitter
+
+const eventName5 = "greet";
+
+const emitter5 = new EventEmitter();
+
+emitter5.on(eventName5, function (data) {
+  console.log(data);
+});
+
+class User5 extends EventEmitter {
+  constructor(username) {
+    super(); // вызываем конструктор EventEmitter
+    this.name = username;
+  }
+  sayHi() {
+    console.log("Привет. Меня зовут", this.name);
+    this.emit(eventName, this.name); // генерируем событие, передаем обработчику имя
+  }
+}
+
+const tom = new User5("Tom");
+// добавляем к объекту tom обработку события "greet"
+// обработчик ожидает получить через параметр имя пользователя
+tom.on(eventName, function (username) {
+  console.log("Привет,", username);
+});
+// при выполнении метода генерируется событие "greet"
+tom.sayHi();
+
+//Аналогичный вариант
+
+const emitter6 = new EventEmitter();
+
+const eventName6 = "greet";
+
+emitter6.on(eventName6, function (username) {
+  console.log("Прив", username);
+});
+
+class User6 {
+  constructor(username, emitter) {
+    this.name = username;
+    this.emitter = emitter;
+  }
+  sayHi() {
+    console.log("Привет. Меня зовут", this.name);
+    this.emitter.emit(eventName, this.name); // генерируем событие, передаем обработчику имя
+  }
+}
+
+const tom2 = new User6("Tom2", emitter);
+tom2.sayHi();
