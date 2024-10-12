@@ -43,13 +43,16 @@ const server = http.createServer((req, res) => {
       const postData = querystring.parse(body);
       const facultyName = postData.faculty_name;
 
-      const sql = "INSERT INTO faculty (faculty_name) VALUES (?)";
-      connection.query(sql, [facultyName], (error, results) => {
-        if (error) {
-          res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
-          res.end("Ошибка при добавлении факультета: " + error.message);
-          return;
-        }
+      const sql = "INSERT INTO Student (name, patronymic, date_of_birth) VALUES (?, ?, ?)";
+	  const values = [name, patronymic, date_of_birth]; // Замените на ваши переменные
+	  connection.query(sql, values, (error, results) => {
+		if (error) {
+			res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+			res.end("Ошибка при добавлении студента: " + error.message);
+			return;
+		}
+		// Обработка успешного добавления
+	});
         res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
         res.end("Факультет добавлен с ID: " + results.insertId);
       });
