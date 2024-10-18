@@ -7,9 +7,9 @@ const path = require("path");
 
 const connection = mysql.createConnection({
   host: "91.219.194.4",
-  user: "bh35910_stipendiy",
+  user: "bh35910_student1711",
   password: "",
-  database: "bh35910_stipendiy",
+  database: "bh35910_mbr",
 });
 
 connection.connect((err) => {
@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
       res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       res.end(data);
     });
-  } else if (req.method === "POST" && req.url === "/add-faculty") {
+  } else if (req.method === "POST" && req.url === "/add-student") {
     let body = "";
 
     req.on("data", (chunk) => {
@@ -41,21 +41,21 @@ const server = http.createServer((req, res) => {
 
     req.on("end", () => {
       const postData = querystring.parse(body);
-      const facultyName = postData.faculty_name;
+      const studentName = postData.student_name;
 
-      const sql = "INSERT INTO Student (name, patronymic, date_of_birth) VALUES (?, ?, ?)";
-	  const values = [name, patronymic, date_of_birth]; // Замените на ваши переменные
-	  connection.query(sql, values, (error, results) => {
-		if (error) {
-			res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
-			res.end("Ошибка при добавлении студента: " + error.message);
-			return;
-		}
-		// Обработка успешного добавления
-	});
-        res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
-        res.end("Факультет добавлен с ID: " + results.insertId);
+      const sql =
+        "INSERT INTO Student (name, patronymic, date_of_birth) VALUES (?, ?, ?)";
+      const values = [name, patronymic, date_of_birth]; // Замените на ваши переменные
+      connection.query(sql, values, (error, results) => {
+        if (error) {
+          res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+          res.end("Ошибка при добавлении студента: " + error.message);
+          return;
+        }
+        // Обработка успешного добавления
       });
+      res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
+      res.end("Факультет добавлен с ID: " + results.insertId);
     });
   } else {
     res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
